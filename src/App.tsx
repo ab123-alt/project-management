@@ -1,8 +1,15 @@
+import {Sidebar} from "./components/Sidebar";
+import NoProjectView from "./components/NoProjectView";
+
 function App() {
+  function handleAddProject() {
+
+  }
   return (
-    <>
-      <h1 className="my-8 text-center text-5xl font-bold">Hello World</h1>
-    </>
+    <main className="h-screen my-8 flex gap-8">
+      <Sidebar onAddProject={handleAddProject}></Sidebar>
+      <NoProjectView onAddProject={handleAddProject}></NoProjectView>
+    </main>
   );
 }
 
