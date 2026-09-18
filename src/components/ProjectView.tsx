@@ -1,12 +1,13 @@
-import {Project} from "../App";
+import {Project, Task} from "../App";
 import Tasks from "./Tasks";
 
 type ProjectViewInput = {
   project: Project
-  onAddTask: (projectId: string, task: string) => void
+  onAddTask: (projectId: string, task: Task) => void
+  onDeleteTask: (projectId: string, taskId: string) => void
 }
 
-export default function ProjectView({project, onAddTask}: ProjectViewInput) {
+export default function ProjectView({project, onAddTask, onDeleteTask}: ProjectViewInput) {
   const formattedDueDate = new Date(project.dueDate).toLocaleDateString('de-DE', {
     year: 'numeric',
     month: 'long',
@@ -30,7 +31,11 @@ export default function ProjectView({project, onAddTask}: ProjectViewInput) {
         </p>
       </header>
       <br/>
-      <Tasks tasks={project.tasks} onAddTask={(task) => onAddTask(project.id, task)}></Tasks>
+      <Tasks
+        tasks={project.tasks}
+        onAddTask={(task) => onAddTask(project.id, task)}
+        onDeleteTask={(taskId) => onDeleteTask(project.id, taskId)}
+      />
     </div>
   )
 }

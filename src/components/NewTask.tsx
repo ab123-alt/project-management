@@ -1,21 +1,26 @@
 import {ChangeEvent, useState} from "react";
+import {Task} from "../App";
 
 type NewTaskInput = {
-  onAddTask: (task: string) => void
+  onAddTask: (task: Task) => void
 }
 export default function NewTask({onAddTask}: NewTaskInput) {
-  const [task, setTask] = useState<string>('')
+  const [taskText, setTaskText] = useState<string>('')
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    setTask(event.target.value)
+    setTaskText(event.target.value)
   }
 
-  function handleTaskAdded(task: string) {
-    if (task.trim() === '') {
+  function handleTaskAdded(taskText: string) {
+    if (taskText.trim() === '') {
       return
     }
-    onAddTask(task)
-    setTask('')
+    onAddTask(
+      {
+        id: self.crypto.randomUUID(),
+        text: taskText
+      })
+    setTaskText('')
   }
 
   return (
@@ -24,9 +29,9 @@ export default function NewTask({onAddTask}: NewTaskInput) {
           type="text"
           className="w-64 px-2 py-1 rounded-sm bg-stone-200"
           onChange={handleChange}
-          value={task}
+          value={taskText}
         />
-        <button onClick={() => handleTaskAdded(task)}>Add Task</button>
+        <button onClick={() => handleTaskAdded(taskText)}>Add Task</button>
       </div>
   )
 }

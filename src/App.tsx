@@ -9,7 +9,12 @@ export type Project = {
   title: string
   description: string
   dueDate: Date
-  tasks: string[]
+  tasks: Task[]
+}
+
+export type Task = {
+  id: string
+  text: string
 }
 
 const initProjects = [
@@ -62,7 +67,7 @@ function App() {
     setSelectedProjectId('')
   }
 
-  function handleTaskAdded(projectId: string, task: string) {
+  function handleTaskAdded(projectId: string, task: Task) {
     setCurrentProjects(projects =>
       projects.map(project =>
           project.id === projectId
@@ -72,10 +77,22 @@ function App() {
     )
   }
 
+  function handleTaskDeletion(projectId: string, taskId: string) {
+    setCurrentProjects(projects =>
+      projects.map(project =>
+        project.id === projectId
+          ? {...project, tasks: project.tasks.filter(task => task.id != taskId)}
+          : project
+      )
+    )
+  }
+
   function getContent() {
     if (selectedProjectId) {
       return <ProjectView project={currentProjects.find(project => project.id === selectedProjectId)!}
-                          onAddTask={handleTaskAdded}/>
+                          onAddTask={handleTaskAdded}
+                          onDeleteTask={handleTaskDeletion}
+      />
     }
     if (isNewProjectBeingCreated) {
       return <NewProjectView onSave={handleSaveNewProject} onCancel={handleNewProjectCreationCancelled}/>
