@@ -1,7 +1,11 @@
+import {Project} from "../App";
+
 type SidebarInputs = {
+  projects: Project[]
   onAddProject: () => void
 }
-export function Sidebar({onAddProject}: SidebarInputs) {
+
+export function Sidebar({projects, onAddProject}: SidebarInputs) {
 
   return <>
     <aside className="w-1/3 px-8 py-16 bg-stone-900 text-stone-50 md:w-72 rounded-r-xl">
@@ -14,7 +18,9 @@ export function Sidebar({onAddProject}: SidebarInputs) {
           + Add project
         </button>
       </div>
-      <ul></ul>
+      <ul>
+        {projects.map(project => <li>{project.title}</li>)}
+      </ul>
     </aside>
   </>
 }
