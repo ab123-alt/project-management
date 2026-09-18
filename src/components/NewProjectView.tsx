@@ -17,7 +17,8 @@ export default function NewProjectView({onSave, onCancel}: NewProjectViewInputs)
       id: self.crypto.randomUUID(),
       title: title,
       description: description,
-      dueDate: date
+      dueDate: date,
+      tasks: []
     }
     onSave(project)
   }

@@ -9,6 +9,6 @@ run `npm run dev` to start
 2. - [x] Add Project creation form with inputs and Datepicker
 3. - [x] 'Add Project' - button functionality
 4. - [x] Add project view
-5. - [ ] Add functionality: add tasks to project 
+5. - [x] Add functionality: add tasks to project 
 6. - [ ] Add functionality: Delete tasks, delete project
 7. - [ ] Validation for input fields

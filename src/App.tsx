@@ -9,11 +9,36 @@ export type Project = {
   title: string
   description: string
   dueDate: Date
+  tasks: string[]
 }
+
+const initProjects = [
+  {
+    id: 'hfhf-lslsls-kkd',
+    title: 'Super important Project',
+    description: 'This is a super important project to do. ASAP',
+    dueDate: new Date('2026-05-10'),
+    tasks: []
+  },
+  {
+    id: 'hfhf',
+    title: 'Learn React',
+    description: 'This is a super important project to do. ASAP',
+    dueDate: new Date('2026-05-10'),
+    tasks: []
+  },
+  {
+    id: 'hfhf-lslsls',
+    title: 'Bake bread',
+    description: 'This is a super important project to do. ASAP',
+    dueDate: new Date('2026-05-10'),
+    tasks: []
+  },
+]
 
 function App() {
 
-  const [currentProjects, setCurrentProjects] = useState<Project[]>([])
+  const [currentProjects, setCurrentProjects] = useState<Project[]>(initProjects)
   const [isNewProjectBeingCreated, setIsNewProjectBeingCreated] = useState<boolean>(false)
   const [selectedProjectId, setSelectedProjectId] = useState<string>('');
 
@@ -37,12 +62,23 @@ function App() {
     setSelectedProjectId('')
   }
 
+  function handleTaskAdded(projectId: string, task: string) {
+    setCurrentProjects(projects =>
+      projects.map(project =>
+          project.id === projectId
+            ? {...project, tasks: [...project.tasks, task]}
+            : project
+      )
+    )
+  }
+
   function getContent() {
     if (selectedProjectId) {
-      return <ProjectView project={currentProjects.find(project => project.id === selectedProjectId)!} />
+      return <ProjectView project={currentProjects.find(project => project.id === selectedProjectId)!}
+                          onAddTask={handleTaskAdded}/>
     }
     if (isNewProjectBeingCreated) {
-      return <NewProjectView onSave={handleSaveNewProject} onCancel={handleNewProjectCreationCancelled} />
+      return <NewProjectView onSave={handleSaveNewProject} onCancel={handleNewProjectCreationCancelled}/>
     }
     return <NoProjectView onAddProject={handleCreateNewProject}></NoProjectView>
   }
