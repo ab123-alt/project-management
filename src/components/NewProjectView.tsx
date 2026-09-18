@@ -14,6 +14,7 @@ export default function NewProjectView({onSave, onCancel}: NewProjectViewInputs)
 
   function handleSaveClick() {
     const project: Project = {
+      id: self.crypto.randomUUID(),
       title: title,
       description: description,
       dueDate: date
@@ -42,15 +43,21 @@ export default function NewProjectView({onSave, onCancel}: NewProjectViewInputs)
         </li>
       </menu>
       <div>
-        <Input type="text" label="Title" onChange={(e: ChangeEvent<HTMLInputElement>) => {
-          setTitle(e.target.value)
-        }}/>
-        <Input label="Description" textarea onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-          setDescription(e.target.value)
-        }}/>
-        <Input type="date" label="Due Date" onChange={(e: ChangeEvent<HTMLInputElement>) => {
-          setDate(new Date(e.target.value))
-        }}/>
+        <Input
+          type="text"
+          label="Title"
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {setTitle(e.target.value)}}
+        />
+        <Input
+          label="Description"
+          textarea
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {setDescription(e.target.value)}}
+        />
+        <Input
+          type="date"
+          label="Due Date"
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {setDate(new Date(e.target.value))}}
+        />
       </div>
     </div>
   );
