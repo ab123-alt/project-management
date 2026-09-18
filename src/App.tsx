@@ -70,9 +70,9 @@ function App() {
   function handleTaskAdded(projectId: string, task: Task) {
     setCurrentProjects(projects =>
       projects.map(project =>
-          project.id === projectId
-            ? {...project, tasks: [...project.tasks, task]}
-            : project
+        project.id === projectId
+          ? {...project, tasks: [...project.tasks, task]}
+          : project
       )
     )
   }
@@ -87,11 +87,19 @@ function App() {
     )
   }
 
+  function handleProjectDeletion(projectId: string) {
+    setSelectedProjectId('')
+    setCurrentProjects(projects =>
+      projects.filter(project => project.id !== projectId)
+    )
+  }
+
   function getContent() {
     if (selectedProjectId) {
       return <ProjectView project={currentProjects.find(project => project.id === selectedProjectId)!}
                           onAddTask={handleTaskAdded}
                           onDeleteTask={handleTaskDeletion}
+                          onDeleteProject={handleProjectDeletion}
       />
     }
     if (isNewProjectBeingCreated) {

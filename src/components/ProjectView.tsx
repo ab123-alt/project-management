@@ -5,9 +5,10 @@ type ProjectViewInput = {
   project: Project
   onAddTask: (projectId: string, task: Task) => void
   onDeleteTask: (projectId: string, taskId: string) => void
+  onDeleteProject: (projectId: string) => void
 }
 
-export default function ProjectView({project, onAddTask, onDeleteTask}: ProjectViewInput) {
+export default function ProjectView({project, onAddTask, onDeleteTask, onDeleteProject}: ProjectViewInput) {
   const formattedDueDate = new Date(project.dueDate).toLocaleDateString('de-DE', {
     year: 'numeric',
     month: 'long',
@@ -21,7 +22,10 @@ export default function ProjectView({project, onAddTask, onDeleteTask}: ProjectV
           <h1 className="text-3xl font-bold text-stone-600 mb-2">
             {project.title}
           </h1>
-          <button className="text-stone-600 hover:text-stone-950">
+          <button
+            className="text-stone-600 hover:text-stone-950"
+            onClick={() => onDeleteProject(project.id)}
+          >
             Delete
           </button>
         </div>
