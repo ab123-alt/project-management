@@ -1,4 +1,5 @@
 import logo from '../assets/no-projects.png'
+import Button from "./Button";
 
 type NoProjectViewInputs = {
   onAddProject: () => void
@@ -18,7 +19,7 @@ export default function NoProjectView({onAddProject}: NoProjectViewInputs) {
           Select a project or get started with a new one
         </p>
         <p className="mt-8">
-          <button className="px-6 py-2 rounded-md bg-stone-800 text-stone-50 hover:bg-stone-950" onClick={onAddProject}>Add project</button>
+          <Button label={'Add project'} onClick={onAddProject}></Button>
         </p>
       </div>
     )
