@@ -11,4 +11,4 @@ run `npm run dev` to start
 4. - [x] Add project view
 5. - [x] Add functionality: add tasks to project 
 6. - [x] Add functionality: Delete tasks, delete project
-7. - [ ] Validation for input fields
+7. - [x] Validation for input fields
