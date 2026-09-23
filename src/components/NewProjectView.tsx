@@ -1,21 +1,26 @@
 import Input from "./Input";
-import {ChangeEvent, useState} from "react";
+import {useRef, useState} from "react";
 import {Project} from "../App";
 import Modal from "./Modal";
+import TextareaInput from "./TextareaInput";
 
 type NewProjectViewInputs = {
   onSave: (p: Project) => void,
   onCancel: () => void
-  project: Project
 }
 export default function NewProjectView({onSave, onCancel}: NewProjectViewInputs) {
-
-  const [title, setTitle] = useState<string>('')
-  const [description, setDescription] = useState<string>('')
-  const [date, setDate] = useState<string>('')
   const [error, setError] = useState<boolean>(false)
 
+  // We don't want to listen to every keystroke and use the onChange method, but rather only collect the value
+  // intrinsic to the html input element when the save button is clicked
+  const titleRef = useRef<HTMLInputElement>(null)
+  const descriptionRef = useRef<HTMLTextAreaElement>(null)
+  const dateRef = useRef<HTMLInputElement>(null)
+
   function handleSaveClick() {
+    let title = titleRef.current!.value;
+    let description = titleRef.current!.value;
+    let date = dateRef.current!.value;
     if (title.trim() === '' || description.trim() === '' || date.trim() === '') {
       setError(true)
       return
@@ -60,28 +65,18 @@ export default function NewProjectView({onSave, onCancel}: NewProjectViewInputs)
               </menu>
               <div>
                   <Input
+                      ref = {titleRef}
                       type="text"
                       label="Title"
-                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        setTitle(e.target.value)
-                      }}
-                      value={title}
                   />
-                  <Input
+                  <TextareaInput
+                      ref ={descriptionRef}
                       label="Description"
-                      textarea
-                      onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-                        setDescription(e.target.value)
-                      }}
-                      value={description}
                   />
                   <Input
+                      ref = {dateRef}
                       type="date"
                       label="Due Date"
-                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        setDate(e.target.value)
-                      }}
-                      value={date}
                   />
               </div>
           </div>
