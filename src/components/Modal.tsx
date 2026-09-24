@@ -1,5 +1,5 @@
 import Button from "./Button";
-import {PropsWithChildren, Ref, useImperativeHandle, useRef} from "react";
+import {PropsWithChildren, Ref, useEffect, useImperativeHandle, useRef} from "react";
 import {createPortal} from "react-dom";
 
 export type ModalRef = {
@@ -8,27 +8,28 @@ export type ModalRef = {
 
 type ModalInputType = PropsWithChildren<{
   buttonText: string
-  ref: Ref<ModalRef>
+  open: boolean
+  onClose: () => void
 }>
 
-export default function Modal({children, buttonText, ref}: ModalInputType) {
+export default function Modal({children, buttonText, open, onClose}: ModalInputType) {
 
   const dialogRef = useRef<HTMLDialogElement>(null)
 
-  useImperativeHandle(ref, () => {
-    return {
-      open() {
-        dialogRef.current!.showModal()
-      }
+  useEffect(() => {
+    if (open) {
+      dialogRef.current!.showModal()
+    } else {
+      dialogRef.current!.close()
     }
-  })
+  }, [open])
 
   return createPortal(
     <dialog ref={dialogRef} className="backdrop:bg-stone-900/90 p-4 rounded-md shadow-md">
       {children}
-      <form method="dialog" className="mt-4 text-right">
-        <Button label={buttonText} />
-      </form>
+      <div className="mt-4 text-right">
+        <Button label={buttonText} onClick={onClose}/>
+      </div>
     </dialog>,
     document.getElementById('modal-root')!)
 }

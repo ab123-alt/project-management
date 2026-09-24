@@ -10,7 +10,7 @@ type NewProjectViewInputs = {
   onCancel: () => void
 }
 export default function NewProjectView({onSave, onCancel}: NewProjectViewInputs) {
-  const modalRef = useRef<ModalRef>(null)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   // We don't want to listen to every keystroke and use the onChange method, but rather only collect the value
   // intrinsic to the html input element when the save button is clicked
   const titleRef = useRef<HTMLInputElement>(null)
@@ -22,7 +22,7 @@ export default function NewProjectView({onSave, onCancel}: NewProjectViewInputs)
     let description = titleRef.current!.value;
     let date = dateRef.current!.value;
     if (title.trim() === '' || description.trim() === '' || date.trim() === '') {
-      modalRef.current!.open()
+      setIsModalOpen(true)
       return
     }
     const project: Project = {
@@ -35,9 +35,13 @@ export default function NewProjectView({onSave, onCancel}: NewProjectViewInputs)
     onSave(project)
   }
 
+  function handleOnClose() {
+    setIsModalOpen(false)
+  }
+
   return (
     <>
-      <Modal ref={modalRef} buttonText={'OK'}>
+      <Modal open={isModalOpen} onClose={handleOnClose} buttonText={'OK'}>
           <h2 className="text-xl font-bold text-stone-700 my-4">Invalid Input</h2>
           <p className="text-stone-600 mb-4">
             Oops ... looks like you forgot to enter a value.
