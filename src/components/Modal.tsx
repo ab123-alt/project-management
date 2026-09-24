@@ -1,23 +1,34 @@
 import Button from "./Button";
+import {PropsWithChildren, Ref, useImperativeHandle, useRef} from "react";
+import {createPortal} from "react-dom";
 
-type ModalInputType = {
-  onModalClick: () => void
-}
+export type ModalRef = {
+  open: () => void;
+};
 
-export default function Modal({onModalClick}: ModalInputType) {
+type ModalInputType = PropsWithChildren<{
+  buttonText: string
+  ref: Ref<ModalRef>
+}>
 
-  return <>
-      <div className="mt-24 w-2/3">
-        <h2 className="text-xl font-bold text-stone-700 my-4">Invalid Input</h2>
-        <p className="text-stone-600 mb-4">
-          Oops ... looks like you forgot to enter a value.
-        </p>
-        <p className="text-stone-600 mb-4">
-          Please make sure you provide a valid value for every input field.
-        </p>
-        <div className="mt-4 text-right">
-          <Button label="OK" onClick={onModalClick}/>
-        </div>
-      </div>
-  </>
+export default function Modal({children, buttonText, ref}: ModalInputType) {
+
+  const dialogRef = useRef<HTMLDialogElement>(null)
+
+  useImperativeHandle(ref, () => {
+    return {
+      open() {
+        dialogRef.current!.showModal()
+      }
+    }
+  })
+
+  return createPortal(
+    <dialog ref={dialogRef} className="backdrop:bg-stone-900/90 p-4 rounded-md shadow-md">
+      {children}
+      <form method="dialog" className="mt-4 text-right">
+        <Button label={buttonText} />
+      </form>
+    </dialog>,
+    document.getElementById('modal-root')!)
 }
