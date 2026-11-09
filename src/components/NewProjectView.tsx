@@ -1,7 +1,7 @@
 import Input from "./Input";
 import {useRef, useState} from "react";
 import {Project} from "../App";
-import Modal, {ModalRef} from "./Modal";
+import Modal from "./Modal";
 import TextareaInput from "./TextareaInput";
 import Button from "./Button";
 

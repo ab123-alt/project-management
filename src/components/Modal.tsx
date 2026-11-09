@@ -1,10 +1,6 @@
 import Button from "./Button";
-import {PropsWithChildren, Ref, useEffect, useImperativeHandle, useRef} from "react";
+import {PropsWithChildren, useEffect, useRef} from "react";
 import {createPortal} from "react-dom";
-
-export type ModalRef = {
-  open: () => void;
-};
 
 type ModalInputType = PropsWithChildren<{
   buttonText: string
